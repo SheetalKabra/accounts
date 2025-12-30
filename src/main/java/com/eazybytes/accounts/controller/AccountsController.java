@@ -4,6 +4,10 @@ import com.eazybytes.accounts.constants.AccountsConstants;
 import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -14,6 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(
+        name = "CRUD REST APIS for Accounts in Eazybank",
+        description = "CRUD REST APIS in Eazybank to create, update, delete and fetch account details."
+)
 @RestController
 @RequestMapping(path = "/api/v1", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
@@ -21,6 +29,14 @@ import org.springframework.web.bind.annotation.*;
 public class AccountsController {
     private IAccountsService iAccountsService;
 
+    @Operation(
+            summary = "Create Accounts REST API",
+            description = "REST API to create new account and customer in Eazybank."
+    )
+    @ApiResponse(
+            responseCode = "201",
+            description = "Http status created"
+    )
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto){
         iAccountsService.createAccount(customerDto);
@@ -29,6 +45,14 @@ public class AccountsController {
                 .body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
     }
 
+    @Operation(
+            summary = "Get Accounts details REST API",
+            description = "REST API to get account and customer details from Eazybank."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Http status OK"
+    )
     @GetMapping("/fetch")
     public ResponseEntity<CustomerDto> fetchAccount(@RequestParam
                                                         @NotEmpty(message = "Mobile Number can not be null or empty.")
@@ -39,6 +63,21 @@ public class AccountsController {
                 .body(customerDto);
     }
 
+    @Operation(
+            summary = "Update Accounts REST API",
+            description = "REST API to update account and customer in Eazybank."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http status Internal Server Error"
+            )
+        }
+    )
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateAccount(@Valid @RequestBody CustomerDto customerDto){
         boolean isUpdated = iAccountsService.updateAccount(customerDto);
@@ -53,6 +92,21 @@ public class AccountsController {
         }
     }
 
+    @Operation(
+            summary = "Delete Accounts REST API",
+            description = "REST API to delete account and customer in Eazybank."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Http status OK"
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Http status Internal Server Error"
+            )
+    }
+    )
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteAccount(@RequestParam
                                                          @NotEmpty(message = "Mobile Number can not be null or empty.")
