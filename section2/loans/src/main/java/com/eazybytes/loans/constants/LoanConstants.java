@@ -12,6 +12,7 @@ public final class LoanConstants {
 
     public static final String STATUS_417 = "417";
     public static final String MESSAGE_417 = "Delete operation failed. Please try again later or contact to dev team.";
+    public static final String MESSAGE_417_UPDATE = "Delete operation failed. Please try again later or contact to dev team.";
 
 
 }
