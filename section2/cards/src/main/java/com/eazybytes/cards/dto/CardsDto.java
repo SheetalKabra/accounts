@@ -1,34 +1,56 @@
 package com.eazybytes.cards.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
+@Schema(
+        name = "Loans",
+        description = "Schema to hold Loans information"
+)
 @Data
 public class CardsDto {
+    @Schema(
+            description = "Mobile number of Customer"
+    )
     @NotNull(message = "Mobile Number can not be null or empty.")
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile Number must be 10 digits.")
     private String mobileNumber;
 
+    @Schema(
+            description = "Card number of Customer"
+    )
     @NotNull(message = "Card Number can not be null or empty.")
     private String cardNumber;
 
+    @Schema(
+            description = "Card Type of Card"
+    )
     @NotNull(message = "Card Type can not be null or empty.")
     private String cardType;
 
+    @Schema(
+            description = "Total Limit of Card"
+    )
     @NotNull(message = "Total Limit can not be null or empty.")
     @PositiveOrZero(message = "Total Limit can be zero or positive.")
-
     private int totalLimit;
+
+    @Schema(
+            description = "Amount Used of Card"
+    )
     @NotNull(message = "Amount Used can not be null or empty.")
     @PositiveOrZero(message = "Amount Used can be zero or positive.")
-
     private int amountUsed;
+
+    @Schema(
+            description = "Available Amount of Card"
+    )
     @NotNull(message = "Available Amount can not be null or empty.")
     @Positive(message = "Available Amount should be greater than zero.")
-
     private int availableAmount;
 
     public String getMobileNumber() {
