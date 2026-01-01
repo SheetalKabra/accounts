@@ -1,9 +1,11 @@
 package com.eazybytes.cards.controller;
 
 import com.eazybytes.cards.contants.CardsConstants;
+import com.eazybytes.cards.dto.CardsDto;
 import com.eazybytes.cards.dto.ResponseDto;
 import com.eazybytes.cards.service.ICardsService;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,14 @@ public class CardsController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(CardsConstants.STATUS_201, CardsConstants.MESSAGE_201));
+    }
+
+    @GetMapping("/fetch")
+    public ResponseEntity<CardsDto> fetchCard(String mobileNumber){
+        CardsDto cardsDto = iCardsService.fetchCard(mobileNumber);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(cardsDto);
     }
 
 }
